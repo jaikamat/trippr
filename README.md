@@ -1,4 +1,4 @@
-# face-tracker
+# trippr
 #### An exercise in integrating the Google Maps Street View API with tracking.js in a MEAN-stack webApp
 
 The website currently allows users to navigate left and right, and move forward in Google Street View using only the position of their face relative to the detecting camera.
