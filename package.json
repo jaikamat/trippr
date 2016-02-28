@@ -1,0 +1,22 @@
+{
+  "name": "facetracker",
+  "version": "1.0.0",
+  "description": "an experimental website using trackingjs and nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server/app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angularjs": "0.0.1",
+    "express": "^4.13.4",
+    "grunt": "^0.4.5",
+    "mongoose": "^4.4.5",
+    "morgan": "^1.6.1",
+    "nodemon": "^1.8.1",
+    "tracking": "^1.1.2"
+  }
+}
