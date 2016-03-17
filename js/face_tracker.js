@@ -1,4 +1,3 @@
-// SET GLOBAL OBJECT THAT BOTH FUNCTIONS CAN PUSH AND PULL HEADINGS TO!
 var global = {
     faceFound: false,
     zfound: false,
@@ -62,8 +61,6 @@ function moveForward () {
 }
 
 function initializePanorama () {
-  //var place = returnRandomLatLong();
-
   var fenway = {lat: 37.820166, lng: -122.478255};
   var panorama = new google.maps.StreetViewPanorama(
     document.getElementById('pano'), {
@@ -87,13 +84,10 @@ function initializePanorama () {
 }
 
 function drawRectangle (canvasContext, dataToUse) {
-  // work into a rectangleDraw function?
   canvasContext.strokeStyle = '#00ff00';
   canvasContext.strokeRect(dataToUse.x - dataToUse.width/2, dataToUse.y - dataToUse.height/2, dataToUse.width, dataToUse.height);
   canvasContext.font = '11px Helvetica';
   canvasContext.fillStyle = "#ffffff";
-  //canvasContext.fillText('x: ' + dataToUse.x + 'px', dataToUse.x - dataToUse.width/2 + dataToUse.width + 5, dataToUse.y + 11);
-  //canvasContext.fillText('y: ' + dataToUse.y + 'px', dataToUse.x - dataToUse.width/2 + dataToUse.width + 5, dataToUse.y + 22);
 }
 
   window.onload = function () {
@@ -109,7 +103,6 @@ function drawRectangle (canvasContext, dataToUse) {
       htracker.start();
 
       document.addEventListener("headtrackrStatus", function (event) {
-        //console.log(event);
         if (event.status === "lost") {
           global.facefound = false;
           global.zfound = false;
@@ -123,9 +116,8 @@ function drawRectangle (canvasContext, dataToUse) {
           global.facefound = true;
         }
           drawRectangle(context, event)
-          //console.log(event);
 
-        // calculate the difference in x and y from the initial
+          // calculate the difference in x and y from the initial
           global.varianceX = event.x - global.initialX;
           global.varianceY = global.initialY - event.y;
 
@@ -136,14 +128,13 @@ function drawRectangle (canvasContext, dataToUse) {
           // this writes the new heading and pitch based on camera
           global.panorama.setPov({
             heading: -global.currentHeading,
-            pitch: 0/*global.currentPitch*/,
+            pitch: 0,
             zoom: global.currentZoom
           })
         }
       );
 
       document.addEventListener("headtrackingEvent", function (event) {
-        //console.log(event);
         if (!global.zfound) {
           global.initialZ = event.z;
           global.zfound = true;
@@ -156,30 +147,8 @@ function drawRectangle (canvasContext, dataToUse) {
             moveForward();
             global.Zcounter = 0;
           }
-        // } else if (global.varianceZ < -5) {
-        //   global.Zcounter -= 1;
-        //   if (global.Zcounter < -20) {
-        //     global.currentZoom = 0;
-        //   }
-        // } else {
-        //   global.Zcounter = 0;
-        //   global.currentZoom = 1;
         }
-        // else {
-        //   global.Zcounter = 0;
-        // }
         console.log(global.varianceZ);
       })
-
-      //console.log(global.panorama.links[0])
-
-    // this is the modal parenthesis  
-    // Office Hours:
-    // should I finish this and polish it for employers?
-    // additional functonality
-    // how to integrate a database?
-    // if Dan knows some cool stuff about Cardboard
-    // can I integrate this with cardboard somehow to make the context
-    // of the app known?
     })
   }

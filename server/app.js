@@ -1,7 +1,9 @@
 var express = require("express");
-var path = require("path");
-
 var app = express();
+var path = require("path");
+var destinationDB  = require("../models/destination.js");
+
+var bodyParser = require('body-parser')
 var morgan = require("morgan");
 
 var publicPath = path.join(__dirname + "./../public/");
@@ -9,13 +11,12 @@ var indexPath = path.join(__dirname + "./../public/landing_page.html");
 var jsPath = path.join(__dirname + "./../js/");
 var nodeModulesPath = path.join(__dirname + "/../node_modules");
 
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+app.use(morgan("dev"));
 app.use(express.static(publicPath));
 app.use(express.static(nodeModulesPath));
 app.use(express.static(jsPath));
-
-// call by sharing, and evaluation strategy - good interview talk!
-
-app.use(morgan("dev"));
 
 app.get("/", function (request, response) {
   response.sendFile(indexPath);
@@ -23,6 +24,13 @@ app.get("/", function (request, response) {
 
 app.get("/map_page", function (request, response) {
   response.sendFile(path.join(__dirname + "/../public/map_page.html"))
+})
+
+app.get("/locations", function (request, response) {
+  destinationDB.find({}).exec()
+  .then(function (location) {
+    response.status(200).json(location);
+  })
 })
 
 app.listen(1337, function () {
@@ -33,7 +41,3 @@ app.listen(1337, function () {
 // Flesh out modal
 // Add search and address functionality
 // Create places to visit and timer functionality
-
-// TODO: FRONTEND
-// Change frontend to angular states
-// Make background: transparent on navbar when map div shows up - use states and ng-class to change?

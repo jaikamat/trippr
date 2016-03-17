@@ -1,6 +1,6 @@
 var app = angular.module('trippr', ["ui.router"]);
 
-app.config(function ($stateProvider, $urlRouterProvider) {
+app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
   $stateProvider
 
   .state("home", {
@@ -13,4 +13,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
   templateUrl: "/frontend/states/trip.state.html",
   controller: "MapController"
   })
+
+  $locationProvider.html5Mode({
+    enabled: true,
+    requireBase: false
+  });
 })
